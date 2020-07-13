@@ -12,13 +12,6 @@ describe('Books Reducer', () => {
   describe('valid Books actions', () => {
     let state: State;
 
-    beforeEach(() => {
-      state = readingListAdapter.setAll(
-        [createReadingListItem('A'), createReadingListItem('B')],
-        initialState
-      );
-    });
-
     it('loadBooksSuccess should load books from reading list', () => {
       const list = [
         createReadingListItem('A'),
@@ -34,6 +27,11 @@ describe('Books Reducer', () => {
     });
 
     it('failedAddToReadingList should undo book addition to the state', () => {
+      
+      state = readingListAdapter.setOne(createReadingListItem('A'),
+        initialState
+      );
+      
       const action = ReadingListActions.failedAddToReadingList({
         book: createBook('B')
       });
@@ -44,6 +42,12 @@ describe('Books Reducer', () => {
     });
 
     it('failedRemoveFromReadingList should undo book removal from the state', () => {
+      
+      state = readingListAdapter.setAll(
+        [createReadingListItem('A'), createReadingListItem('B'), createReadingListItem('C')],
+        initialState
+      );
+      
       const action = ReadingListActions.failedRemoveFromReadingList({
         item: createReadingListItem('C')
       });
