@@ -1,5 +1,5 @@
-import { createAction, props } from '@ngrx/store';
 import { Book, ReadingListItem } from '@tmo/shared/models';
+import { createAction, props } from '@ngrx/store';
 
 export const loadReadingList = createAction('[Reading List] Load list');
 
@@ -39,5 +39,20 @@ export const failedRemoveFromReadingList = createAction(
 
 export const confirmedRemoveFromReadingList = createAction(
   '[Reading List] Confirmed remove from list',
+  props<{ item: ReadingListItem }>()
+);
+
+export const finishBookFromReadingList = createAction(
+  '[Reading List] Finish Book from list',
+  props<{ item: ReadingListItem }>()
+);
+
+export const confirmedFinishBookFromReadingList = createAction(
+  '[Reading List] Confirmed finish book from list',
+  props<{ item: ReadingListItem }>()
+);
+
+export const failedFinishBookFromReadingList = createAction(
+  '[Reading List] Failed finish book from list',
   props<{ item: ReadingListItem }>()
 );

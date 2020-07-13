@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
-import { fetch, optimisticUpdate } from '@nrwl/angular';
 import * as ReadingListActions from './reading-list.actions';
+
+import { Actions, OnInitEffects, createEffect, ofType } from '@ngrx/effects';
+import { fetch, optimisticUpdate } from '@nrwl/angular';
+
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { ReadingListItem } from '@tmo/shared/models';
 import { map } from 'rxjs/operators';
 
@@ -66,6 +68,28 @@ export class ReadingListEffects implements OnInitEffects {
         },
         undoAction: ({ item }) => {
           return ReadingListActions.failedRemoveFromReadingList({
+            item
+          });
+        }
+      })
+    )
+  );
+
+  finishBook$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ReadingListActions.finishBookFromReadingList),
+      optimisticUpdate({
+        run: ({ item }) => {
+          return this.http.put(`/api/reading-list/${item.bookId}/finished`, item).pipe(
+            map(() =>
+              ReadingListActions.confirmedFinishBookFromReadingList({
+                item
+              })
+            )
+          );
+        },
+        undoAction: ({ item }) => {
+          return ReadingListActions.failedFinishBookFromReadingList({
             item
           });
         }
