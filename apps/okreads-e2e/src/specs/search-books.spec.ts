@@ -1,4 +1,5 @@
-import { $, $$, browser, ExpectedConditions } from 'protractor';
+import { $, $$, ExpectedConditions, browser } from 'protractor';
+
 import { expect } from 'chai';
 
 describe('When: Use the search feature', () => {
@@ -22,7 +23,7 @@ describe('When: Use the search feature', () => {
     await browser.wait(
       ExpectedConditions.textToBePresentInElement($('tmo-root'), 'okreads')
     );
-
+    // Note: This one is implemented in the Tast 2 commit.
     // TODO: Implement this test!
   });
 });
